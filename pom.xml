@@ -106,6 +106,12 @@
     <version.jinahya-persistence>0.6.7</version.jinahya-persistence>
     <!-- https://central.sonatype.com/artifact/uk.co.jemos.podam/podam/versions -->
     <version.uk.co.jemos.podam>8.0.2.RELEASE</version.uk.co.jemos.podam>
+    <!--
+      Jackson 2 (com.fasterxml): co's Product_Randomizer, in upstream's test-companion jar, writes PRODUCT_DETAILS with
+      Jackson 2's ObjectMapper. The version is the jackson-bom upstream imports.
+      -->
+    <!-- https://central.sonatype.com/artifact/com.fasterxml.jackson/jackson-bom/versions -->
+    <version.com.fasterxml.jackson>2.22.3</version.com.fasterxml.jackson>
     <!-- https://central.sonatype.com/artifact/org.projectlombok/lombok/versions -->
     <version.org.projectlombok>1.18.48</version.org.projectlombok>
     <!-- https://central.sonatype.com/artifact/com.oracle.database.jdbc/ojdbc17/versions -->
@@ -173,6 +179,13 @@
         <groupId>org.junit</groupId>
         <artifactId>junit-bom</artifactId>
         <version>${version.org.junit}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <version>${version.com.fasterxml.jackson}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

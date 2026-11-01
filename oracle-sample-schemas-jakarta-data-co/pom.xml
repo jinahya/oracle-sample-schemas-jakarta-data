@@ -39,5 +39,14 @@
       <classifier>test-companion</classifier>
       <scope>test</scope>
     </dependency>
+    <!--
+      What Product_Randomizer of that jar writes the PRODUCT_DETAILS JSON with; upstream has it at test scope, so the
+      jar does not bring it. Jackson 2, from the jackson-bom of the root pom.
+      -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 </project>

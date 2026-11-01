@@ -82,26 +82,31 @@ local `~/.m2`**: after any change upstream, run `./mvnw -DskipTests install` the
   there), in the same package, so that the `test-companion` randomizers and persisters, compiled against that
   package, find them. **Keep them in step with upstream**: diff against upstream's before touching a mapping, and
   change the mapping there first. They need nothing from upstream's test sources but each other.
-- What was copied, per module: every entity, its id class, and, in `co`, the two keyless view classes below. Not
-  copied: upstream's tests, test bases, producers, randomizers, persisters and test helpers (`*_TestUtils`,
-  `*Utils`, `___Persistence_TestUtils`, `PromotionNamedId_TestAccess`).
-- **Classes with no repository.** Only an `@Entity` gets one:
-  - `co`'s `ProductReview` and `StoreOrder` map the views `PRODUCT_REVIEWS` and `STORE_ORDERS`, which no column, or
-    combination of columns, identifies; upstream maps them by plain classes (no `@Entity`, no id), so there is no
-    entity type for a repository. They are copied anyway, because `co`'s `test-companion` jar
-    (`ProductReview_Randomizer`, `StoreOrder_Randomizer`) is compiled against them, and they are what a `@Query` of
-    another repository would select a view row into.
-  - The id classes (`OrderItemId`, `ProductOrderId`, `JobHistoryId`, `CostId`, `FweekPscatSalesMvId`, `ProfitId`,
-    `SalesId`) are `@Embeddable`s, not entities.
-- `co`'s `test-companion` jar also references `ProductDetails_TestUtils`, an upstream test helper it does not carry.
-  Nothing here loads it yet; a test that draws a randomized `Product` (or anything that cascades to one) will fail with
-  `NoClassDefFoundError` until that helper is copied into `co`'s `src/test`.
+- What was copied, per module: every entity and its id class. Not copied: upstream's tests, test bases, producers,
+  randomizers, persisters and test helpers (`*Utils`, `___Persistence_TestUtils`, `PromotionNamedId_TestAccess`),
+  except the one below.
+- **Only an `@Entity` gets a repository.** The id classes (`OrderItemId`, `ProductOrderId`, `JobHistoryId`, `CostId`,
+  `FweekPscatSalesMvId`, `ProfitId`, `SalesId`) are `@Embeddable`s, not entities, and get none.
+- **Not copied: the non-entity view classes.** Upstream maps `co`'s keyless views `PRODUCT_REVIEWS` and `STORE_ORDERS`
+  as plain classes (`ProductReview`, `StoreOrder`), not entities: no column, or combination of columns, identifies a
+  row, so there is no entity type for a repository. Neither the metamodel nor `persistence.xml` needs them, so they
+  are left out, as the sibling `oracle-sample-schemas-spring-data` leaves them out. `co`'s `test-companion` jar still
+  carries `ProductReview_Randomizer` / `StoreOrder_Randomizer`; nothing here loads them.
 - Do not copy upstream's randomizers or persisters into `src/test`; the `test-companion` jar is on the test
-  classpath. Podam and `jinahya-persistence-test-utils` are declared here because that jar brings no dependencies.
+  classpath, and `ObjectRandomizerUtils` / `EntityPersisterUtils` find `<Entity>_Randomizer` / `<Entity>_Persister`
+  next to the entity by name. A copy only shadows the jar and drifts. Podam and `jinahya-persistence-test-utils` are
+  declared here because that jar brings no dependencies.
+- **The one exception is `co`'s `ProductDetails_TestUtils`**, copied verbatim into `co`'s test sources
+  (`…persistence.co`), as the sibling `oracle-sample-schemas-spring-data` copies it. `Product_Randomizer` calls it,
+  but the jar's includes take `*_Randomizer` and `*_Persister` only, so without the copy every `Product`
+  randomization fails with `NoClassDefFoundError`. Drop the copy once upstream packages the helper. The same
+  randomizer writes `PRODUCT_DETAILS` with Jackson 2's `ObjectMapper`, which upstream has at test scope, so `co`
+  declares `jackson-databind` (test, from the root's `jackson-bom` import, `2.22.3` as upstream's).
 - The version properties in the root `pom.xml` (`version.jinahya-persistence`, `version.uk.co.jemos.podam`, Hibernate
-  ORM `7.4.12.Final`, H2, `ojdbc17`, JUnit `5.14.4`, Hibernate Validator ...) deliberately mirror upstream's, so what
-  compiles here against the test-companion jars is what those jars were compiled against, and the generated code runs
-  on the ORM that generated upstream's metamodel. Change them in step with upstream, not independently.
+  ORM `7.4.12.Final`, H2, `ojdbc17`, JUnit `5.14.4`, Jackson `2.22.3`, Hibernate Validator ...) deliberately mirror
+  upstream's, so what compiles here against the test-companion jars is what those jars were compiled against, and the
+  generated code runs on the ORM that generated upstream's metamodel. Change them in step with upstream, not
+  independently.
 - Read `../oracle-sample-schemas-persistence/README.md` and `CLAUDE.md` before touching anything about the mappings.
 
 ## Build
