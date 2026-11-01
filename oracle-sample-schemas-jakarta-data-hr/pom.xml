@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>io.github.jinahya</groupId>
+    <artifactId>oracle-sample-schemas-jakarta-data</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>oracle-sample-schemas-jakarta-data-hr</artifactId>
+  <packaging>jar</packaging>
+
+  <name>${project.artifactId}</name>
+  <description>Jakarta Data for the HR (Human Resources) schema</description>
+
+  <!--
+    Everything else (the APIs, the provider, the test libraries) is declared in the parent and inherited. This
+    module adds its own upstream module only.
+    -->
+  <dependencies>
+    <!--
+      main =======================================================================================
+      The mapped superclasses the entities of this module extend, and their static metamodel (MappedCustomer_, ...).
+      Upstream keeps its own entities in its test sources, so none arrive from the jar; the ones here, one package up
+      from the repositories, are copies of them. Its jakarta.* and driver dependencies are provided there, so none
+      arrive transitively.
+      -->
+    <dependency>
+      <groupId>io.github.jinahya</groupId>
+      <artifactId>oracle-sample-schemas-persistence-hr</artifactId>
+    </dependency>
+
+    <!-- test tools ================================================================================= -->
+    <!-- The upstream randomizers and persisters. -->
+    <dependency>
+      <groupId>io.github.jinahya</groupId>
+      <artifactId>oracle-sample-schemas-persistence-hr</artifactId>
+      <classifier>test-companion</classifier>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>

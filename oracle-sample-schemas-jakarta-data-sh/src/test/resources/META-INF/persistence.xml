@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Test-only. The two units mirror upstream's
+  (../oracle-sample-schemas-persistence/oracle-sample-schemas-persistence-sh/src/test/resources/META-INF/persistence.xml);
+  keep them in step. Hibernate only; see the pom for why there is no EclipseLink here.
+
+  The unit names, sh-test and sh-it, are upstream's, schema-prefixed for the reason upstream gives: a unit name need
+  only be unique within its archive, but the modules' test classpaths can meet in one JVM (an IDE running every test of
+  the project), where two units of one name are resolved to whichever descriptor is found first.
+
+  No repository names a unit (@Repository(dataStore = ...)): the generated <Name>_ takes its factory from the
+  container, which the test bases produce from the unit they run on; see __Repository_TestBase.
+
+  Both units list the classes upstream's do; with exclude-unlisted-classes, an entity not listed is not managed, and a
+  converter not listed is not found.
+  -->
+<!-- https://jakarta.ee/xml/ns/persistence/ -->
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_2.xsd"
+             version="3.2">
+  <persistence-unit name="sh-test" transaction-type="RESOURCE_LOCAL">
+    <description>Persistence Unit for an In-Memory DB</description>
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Country</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Channel</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.mapped.CountrySection</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Customer</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Product</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Promotion</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.SupplementaryDemographics</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Time</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.mapped.TimeDayNameAttributeConverter</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.mapped.TimeMonthNameAttributeConverter</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.mapped.TimeMonthDescAttributeConverter</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.CalMonthSalesMv</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.CostId</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Cost</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.FweekPscatSalesMvId</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.FweekPscatSalesMv</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.ProfitId</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Profit</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.SalesId</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Sales</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <validation-mode>CALLBACK</validation-mode>
+    <properties>
+      <property name="jakarta.persistence.jdbc.driver" value="org.h2.Driver"/>
+      <!-- the H2 upstream's in-memory unit runs on; https://github.com/eclipse-ee4j/eclipselink/issues/1393 -->
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:h2:mem:;database_to_upper=false;MODE=LEGACY"/>
+      <property name="jakarta.persistence.jdbc.user" value="sa"/>
+      <property name="jakarta.persistence.jdbc.password" value="password"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+      <property name="hibernate.highlight_sql" value="true"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.use_sql_comment" value="true"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="sh-it" transaction-type="RESOURCE_LOCAL">
+    <description>Persistence Unit for a Physical Database</description>
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <!-- qualifies every table of this unit, and only of this unit, with the SH schema; see the file -->
+    <mapping-file>META-INF/sh/orm-it.xml</mapping-file>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Country</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Channel</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.mapped.CountrySection</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Customer</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Product</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Promotion</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.SupplementaryDemographics</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Time</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.mapped.TimeDayNameAttributeConverter</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.mapped.TimeMonthNameAttributeConverter</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.mapped.TimeMonthDescAttributeConverter</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.CalMonthSalesMv</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.CostId</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Cost</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.FweekPscatSalesMvId</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.FweekPscatSalesMv</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.ProfitId</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Profit</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.SalesId</class>
+    <class>com.github.jinahya.oracle.sample.schemas.persistence.sh.Sales</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <validation-mode>CALLBACK</validation-mode>
+    <properties>
+      <property name="jakarta.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
+      <!-- the database of upstream's docker-compose.yml; see its compose.sh -->
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/freepdb1"/>
+      <!-- a DML-only user which owns no objects of its own; orm-it.xml names the schema -->
+      <property name="jakarta.persistence.jdbc.user" value="dmlonly"/>
+      <property name="jakarta.persistence.jdbc.password" value="password"/>
+      <!-- The sample data is the fixture the tests read; nothing here may touch the schema. -->
+      <property name="hibernate.hbm2ddl.auto" value="none"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.highlight_sql" value="true"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.use_sql_comment" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>
