@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Test-only. The two units mirror upstream's
-  (../oracle-sample-schemas-persistence/oracle-sample-schemas-persistence-sh/src/test/resources/META-INF/persistence.xml);
+  (../../oracle-sample-schemas-persistence/oracle-sample-schemas-persistence-sh/src/test/resources/META-INF/persistence.xml);
   keep them in step. Hibernate only; see the pom for why there is no EclipseLink here.
 
   The unit names, sh-test and sh-it, are upstream's, schema-prefixed for the reason upstream gives: a unit name need

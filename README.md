@@ -39,7 +39,7 @@ so unlike upstream this build has no provider profiles.
 Upstream owns the compose file:
 
 ```shell
-$ cd ../oracle-sample-schemas-persistence && ./compose.sh
+$ cd ../../oracle-sample-schemas-persistence && ./compose.sh
 ```
 
 brings up an Oracle Database Free on `localhost:1521/freepdb1` with the sample schemas installed. Each module's
@@ -55,4 +55,4 @@ $ ./_mvn_verify_notests.sh    # no database needed
 ```
 
 The upstream jars, and their `test-companion` jars of randomizers and persisters, are local `SNAPSHOT`s:
-`./mvnw -DskipTests install` in `../oracle-sample-schemas-persistence` first.
+`./mvnw -DskipTests install` in `../../oracle-sample-schemas-persistence` first.

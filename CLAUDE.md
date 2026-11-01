@@ -68,7 +68,7 @@ per schema, as upstream has:
 
 ## Upstream, and the entities
 
-The sibling checkout `../oracle-sample-schemas-persistence` publishes, at `0.0.6-SNAPSHOT`, one jar per schema
+The upstream checkout `../../oracle-sample-schemas-persistence` publishes, at `0.0.6-SNAPSHOT`, one jar per schema
 (`io.github.jinahya:oracle-sample-schemas-persistence-co`, `-hr`, `-sh`) of **mapped superclasses, their generated
 static metamodel, and the embeddables and converters that carry no association** (package `<schema>.mapped`), and a
 second jar of each classified `test-companion` (`*_Randomizer` / `*_Persister` classes). They exist **only in the
@@ -107,7 +107,7 @@ local `~/.m2`**: after any change upstream, run `./mvnw -DskipTests install` the
   upstream's, so what compiles here against the test-companion jars is what those jars were compiled against, and the
   generated code runs on the ORM that generated upstream's metamodel. Change them in step with upstream, not
   independently.
-- Read `../oracle-sample-schemas-persistence/README.md` and `CLAUDE.md` before touching anything about the mappings.
+- Read `../../oracle-sample-schemas-persistence/README.md` and `CLAUDE.md` before touching anything about the mappings.
 
 ## Build
 
@@ -134,7 +134,7 @@ non-convergence, a JDK below 25, and a `-P` naming a profile that does not exist
 reactor: `./mvnw -q enforcer:enforce -Drules=dependencyConvergence`.
 
 **The integration tests need the Oracle database container upstream owns**: run
-`../oracle-sample-schemas-persistence/compose.sh` (Ctrl-C takes it down; the data, a bind mount, survives). It runs
+`../../oracle-sample-schemas-persistence/compose.sh` (Ctrl-C takes it down; the data, a bind mount, survives). It runs
 `container-registry.oracle.com/database/free:latest-lite` on `localhost:1521/freepdb1` and installs `CO`, `HR` and
 `SH` on first start. Each `<schema>-it` unit connects there as `dmlonly` / `password`, a DML-only user that owns no
 objects, with `hbm2ddl.auto=none`; `META-INF/<schema>/orm-it.xml` (`<persistence-unit-defaults><schema>`) qualifies

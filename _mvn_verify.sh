@@ -5,7 +5,7 @@
 # The ITs talk to a real Oracle at localhost:1521/freepdb1 (the `<schema>-it` unit of each module), which upstream
 # owns; bring it up with
 #
-#     cd ../oracle-sample-schemas-persistence && ./compose.sh
+#     cd ../../oracle-sample-schemas-persistence && ./compose.sh
 #
 # first; otherwise they fail on the connection rather than on a query.
 #
