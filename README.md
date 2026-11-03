@@ -14,9 +14,9 @@ One per schema, as upstream:
 
 | module | schema | entities | repositories |
 | --- | --- | --- | --- |
-| `oracle-sample-schemas-jakarta-data-co` | `CO` (Customer Orders) | `com.github.jinahya.oracle.sample.schemas.persistence.co` | `...co.data` |
-| `oracle-sample-schemas-jakarta-data-hr` | `HR` (Human Resources) | `com.github.jinahya.oracle.sample.schemas.persistence.hr` | `...hr.data` |
-| `oracle-sample-schemas-jakarta-data-sh` | `SH` (Sales History) | `com.github.jinahya.oracle.sample.schemas.persistence.sh` | `...sh.data` |
+| `oracle-sample-schemas-jakarta-data-co` | `CO` (Customer Orders) | `com.github.jinahya.oracle.sample.persistence.co` | `...co.data` |
+| `oracle-sample-schemas-jakarta-data-hr` | `HR` (Human Resources) | `com.github.jinahya.oracle.sample.persistence.hr` | `...hr.data` |
+| `oracle-sample-schemas-jakarta-data-sh` | `SH` (Sales History) | `com.github.jinahya.oracle.sample.persistence.sh` | `...sh.data` |
 
 The root `pom.xml` is the aggregator and the parent of the three; each module depends on its own upstream module only.
 

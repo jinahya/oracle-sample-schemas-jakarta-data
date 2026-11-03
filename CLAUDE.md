@@ -23,7 +23,7 @@ per schema, as upstream has:
 | `oracle-sample-schemas-jakarta-data-hr` | `oracle-sample-schemas-persistence-hr` | `...persistence.hr` | `...persistence.hr.data` | `hr-test` / `hr-it` |
 | `oracle-sample-schemas-jakarta-data-sh` | `oracle-sample-schemas-persistence-sh` | `...persistence.sh` | `...persistence.sh.data` | `sh-test` / `sh-it` |
 
-(`...` is `com.github.jinahya.oracle.sample.schemas`.)
+(`...` is `com.github.jinahya.oracle.sample`.)
 
 - The root `pom.xml` is also the modules' parent. It holds every version (`<properties>`, `<dependencyManagement>`),
   every plugin configuration (`<pluginManagement>`: compiler with its processors, enforcer, surefire, failsafe), the
@@ -78,7 +78,7 @@ local `~/.m2`**: after any change upstream, run `./mvnw -DskipTests install` the
 - **Upstream keeps its entities in `src/test`**, on purpose: which associations an entity maps, lazy or not, with
   what cascade, is an application's decision, and this project is that application. The entities here are copies of
   upstream's test classes, verbatim
-  (`oracle-sample-schemas-persistence-<schema>/src/test/java/com/github/jinahya/oracle/sample/schemas/persistence/<schema>/<Entity>.java`
+  (`oracle-sample-schemas-persistence-<schema>/src/test/java/com/github/jinahya/oracle/sample/persistence/<schema>/<Entity>.java`
   there), in the same package, so that the `test-companion` randomizers and persisters, compiled against that
   package, find them. **Keep them in step with upstream**: diff against upstream's before touching a mapping, and
   change the mapping there first. They need nothing from upstream's test sources but each other.
