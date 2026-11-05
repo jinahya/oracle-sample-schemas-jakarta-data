@@ -435,7 +435,7 @@
 
     <!--
       test runtime ===============================================================================
-      The driver for the Oracle database upstream brings up (compose.sh there; localhost:1521/freepdb1), and the H2
+      The driver for the Oracle database upstream brings up (_compose.sh there; localhost:1521/freepdb1), and the H2
       the unit tests run on. Test scope, so consumers get neither.
       -->
     <dependency>
@@ -596,7 +596,7 @@
 
   <profiles>
     <!--
-      Binds maven-failsafe-plugin, which runs the *IT classes against the Oracle database upstream's compose.sh brings
+      Binds maven-failsafe-plugin, which runs the *IT classes against the Oracle database upstream's _compose.sh brings
       up. A profile, as upstream, so that a plain `mvnw verify` needs no database. The modules inherit it.
       -->
     <profile>

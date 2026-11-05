@@ -88,11 +88,11 @@
     <validation-mode>CALLBACK</validation-mode>
     <properties>
       <property name="jakarta.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
-      <!-- the database of upstream's docker-compose.yml; see its compose.sh -->
+      <!-- the database of upstream's docker-compose.yml; see its _compose.sh -->
       <property name="jakarta.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/freepdb1"/>
       <!-- a DML-only user which owns no objects of its own; orm-it.xml names the schema -->
       <property name="jakarta.persistence.jdbc.user" value="dmlonly"/>
-      <property name="jakarta.persistence.jdbc.password" value="password"/>
+      <property name="jakarta.persistence.jdbc.password" value="Passw0rd!"/>
       <!-- The sample data is the fixture the tests read; nothing here may touch the schema. -->
       <property name="hibernate.hbm2ddl.auto" value="none"/>
       <property name="hibernate.format_sql" value="true"/>

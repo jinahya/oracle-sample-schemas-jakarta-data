@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * The base of the integration tests of a repository, on the {@code sh-it} unit: the Oracle database upstream's
- * {@code compose.sh} brings up on {@code localhost:1521/freepdb1}, connected to as the DML-only user
+ * {@code _compose.sh} brings up on {@code localhost:1521/freepdb1}, connected to as the DML-only user
  * {@code dmlonly}, with every table qualified by the {@code SH} schema ({@code META-INF/sh/orm-it.xml}).
  * <p>
  * The sample data is the fixture. A test reads the rows that are there, and anything it writes it does inside a

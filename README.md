@@ -39,12 +39,12 @@ so unlike upstream this build has no provider profiles.
 Upstream owns the compose file:
 
 ```shell
-$ cd ../../oracle-sample-schemas-persistence && ./compose.sh
+$ cd ../../oracle-sample-schemas-persistence && ./_compose.sh
 ```
 
 brings up an Oracle Database Free on `localhost:1521/freepdb1` with the sample schemas installed. Each module's
 `<schema>-it` unit of `src/test/resources/META-INF/persistence.xml` connects there as the DML-only user `dmlonly` /
-`password`, and its `META-INF/<schema>/orm-it.xml` qualifies every table with the schema.
+`Passw0rd!`, and its `META-INF/<schema>/orm-it.xml` qualifies every table with the schema.
 
 ## Building
 

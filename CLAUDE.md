@@ -134,9 +134,9 @@ non-convergence, a JDK below 25, and a `-P` naming a profile that does not exist
 reactor: `./mvnw -q enforcer:enforce -Drules=dependencyConvergence`.
 
 **The integration tests need the Oracle database container upstream owns**: run
-`../../oracle-sample-schemas-persistence/compose.sh` (Ctrl-C takes it down; the data, a bind mount, survives). It runs
+`../../oracle-sample-schemas-persistence/_compose.sh` (Ctrl-C takes it down; the data, a bind mount, survives). It runs
 `container-registry.oracle.com/database/free:latest-lite` on `localhost:1521/freepdb1` and installs `CO`, `HR` and
-`SH` on first start. Each `<schema>-it` unit connects there as `dmlonly` / `password`, a DML-only user that owns no
+`SH` on first start. Each `<schema>-it` unit connects there as `dmlonly` / `Passw0rd!`, a DML-only user that owns no
 objects, with `hbm2ddl.auto=none`; `META-INF/<schema>/orm-it.xml` (`<persistence-unit-defaults><schema>`) qualifies
 every table of that unit with its schema. The sample data is the fixture the ITs read, and nothing may touch the schema
 or leave rows behind.
