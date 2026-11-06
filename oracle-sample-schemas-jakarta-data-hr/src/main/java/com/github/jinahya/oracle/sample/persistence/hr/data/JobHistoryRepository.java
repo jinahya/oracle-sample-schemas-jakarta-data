@@ -1,7 +1,7 @@
 package com.github.jinahya.oracle.sample.persistence.hr.data;
 
 import com.github.jinahya.oracle.sample.persistence.hr.JobHistory;
-import com.github.jinahya.oracle.sample.persistence.hr.JobHistoryId;
+import com.github.jinahya.oracle.sample.persistence.hr.mapped.JobHistoryId;
 import jakarta.data.repository.CrudRepository;
 import jakarta.data.repository.Repository;
 

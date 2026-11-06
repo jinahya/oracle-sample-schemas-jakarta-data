@@ -27,7 +27,6 @@
     <class>com.github.jinahya.oracle.sample.persistence.hr.Employee</class>
     <class>com.github.jinahya.oracle.sample.persistence.hr.EmpDetailsView</class>
     <class>com.github.jinahya.oracle.sample.persistence.hr.Job</class>
-    <class>com.github.jinahya.oracle.sample.persistence.hr.JobHistoryId</class>
     <class>com.github.jinahya.oracle.sample.persistence.hr.JobHistory</class>
     <class>com.github.jinahya.oracle.sample.persistence.hr.Location</class>
     <class>com.github.jinahya.oracle.sample.persistence.hr.Region</class>
@@ -57,7 +56,6 @@
     <class>com.github.jinahya.oracle.sample.persistence.hr.Employee</class>
     <class>com.github.jinahya.oracle.sample.persistence.hr.EmpDetailsView</class>
     <class>com.github.jinahya.oracle.sample.persistence.hr.Job</class>
-    <class>com.github.jinahya.oracle.sample.persistence.hr.JobHistoryId</class>
     <class>com.github.jinahya.oracle.sample.persistence.hr.JobHistory</class>
     <class>com.github.jinahya.oracle.sample.persistence.hr.Location</class>
     <class>com.github.jinahya.oracle.sample.persistence.hr.Region</class>

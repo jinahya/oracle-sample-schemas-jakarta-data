@@ -46,9 +46,9 @@ per schema, as upstream has:
   `CrudRepository<Entity, Id>` directly. Drop the direct `CrudRepository` and `hibernate-processor` fails with
   "repository does not have a well-defined primary entity type for inherited member 'deleteById'". The repositories
   are empty for now. Views are entities too, so they have repositories like the tables.
-- The id type is the entity's: the `@Id` attribute's type, or the `@EmbeddedId` / `@IdClass` class
-  (`co`: `OrderItemId`, `ProductOrderId`; `hr`: `JobHistoryId`; `sh`: `CostId`, `FweekPscatSalesMvId`, `ProfitId`,
-  `SalesId`). `sh`'s `Time` is keyed by a `LocalDateTime`.
+- The id type is the entity's: the `@Id` attribute's type, or the `@EmbeddedId` / `@IdClass` class, which is
+  upstream's, from its main jar, in `<schema>.mapped` (`co`: `OrderItemId`, `ProductOrderId`; `hr`: `JobHistoryId`;
+  `sh`: `CostId`, `FweekPscatSalesMvId`, `ProfitId`, `SalesId`). `sh`'s `Time` is keyed by a `LocalDateTime`.
 - **One provider, no provider profiles.** Hibernate Data Repositories is the only Jakarta Data provider for Java SE:
   `hibernate-processor` implements every `@Repository` interface at compile time as a `<Name>_` class under
   `target/generated-sources/annotations`, which runs on an `org.hibernate.StatelessSession`. EclipseLink 5.0 has no
@@ -77,16 +77,21 @@ local `~/.m2`**: after any change upstream, run `./mvnw -DskipTests install` the
 
 - **Upstream keeps its entities in `src/test`**, on purpose: which associations an entity maps, lazy or not, with
   what cascade, is an application's decision, and this project is that application. The entities here are copies of
-  upstream's test classes, verbatim
+  upstream's test classes
   (`oracle-sample-schemas-persistence-<schema>/src/test/java/com/github/jinahya/oracle/sample/persistence/<schema>/<Entity>.java`
   there), in the same package, so that the `test-companion` randomizers and persisters, compiled against that
   package, find them. **Keep them in step with upstream**: diff against upstream's before touching a mapping, and
   change the mapping there first. They need nothing from upstream's test sources but each other.
-- What was copied, per module: every entity and its id class. Not copied: upstream's tests, test bases, producers,
-  randomizers, persisters and test helpers (`*Utils`, `___Persistence_TestUtils`, `PromotionNamedId_TestAccess`),
-  except the one below.
-- **Only an `@Entity` gets a repository.** The id classes (`OrderItemId`, `ProductOrderId`, `JobHistoryId`, `CostId`,
-  `FweekPscatSalesMvId`, `ProfitId`, `SalesId`) are `@Embeddable`s, not entities, and get none.
+- Each copy is upstream's, verbatim, plus only the `@NamedQuery`s a repository here runs. Upstream declares none
+  (its commit 85076e2b, "Remove every named query"), and no repository here runs one, so today every copy is exactly
+  upstream's. An `@EmbeddedId` is the attribute `id_`, as upstream names it, so a query on one reads `e.id_.orderId`.
+- What was copied, per module: every entity. Not copied: the id classes, which upstream keeps in main
+  (`<schema>.mapped`) and its jar brings; upstream's tests, test bases, producers, randomizers, persisters and test
+  helpers (`*Utils`, `___Persistence_TestUtils`, `PromotionNamedId_TestAccess`), except the one below. (`sh`'s
+  `Sales` links `SalesUtils` in a javadoc comment; that helper stays upstream.)
+- **Only an `@Entity` gets a repository.** The id classes get none: `OrderItemId`, `ProductOrderId`,
+  `FweekPscatSalesMvId` and `SalesId` are `@Embeddable`s, and `JobHistoryId`, `CostId` and `ProfitId` plain
+  `@IdClass` classes.
 - **Not copied: the non-entity view classes.** Upstream maps `co`'s keyless views `PRODUCT_REVIEWS` and `STORE_ORDERS`
   as plain classes (`ProductReview`, `StoreOrder`), not entities: no column, or combination of columns, identifies a
   row, so there is no entity type for a repository. Neither the metamodel nor `persistence.xml` needs them, so they
@@ -101,7 +106,7 @@ local `~/.m2`**: after any change upstream, run `./mvnw -DskipTests install` the
   but the jar's includes take `*_Randomizer` and `*_Persister` only, so without the copy every `Product`
   randomization fails with `NoClassDefFoundError`. Drop the copy once upstream packages the helper. The same
   randomizer writes `PRODUCT_DETAILS` with Jackson 2's `ObjectMapper`, which upstream has at test scope, so `co`
-  declares `jackson-databind` (test, from the root's `jackson-bom` import, `2.22.3` as upstream's).
+  declares `jackson-databind` (test, from the root's `jackson-bom` import, at the version of PROJECTS_VERSIONS.asciidoc, as upstream's).
 - The version properties in the root `pom.xml` (`version.jinahya-persistence`, `version.uk.co.jemos.podam`, Hibernate
   ORM `7.4.12.Final`, H2, `ojdbc17`, JUnit `5.14.4`, Jackson `2.22.3`, Hibernate Validator ...) deliberately mirror
   upstream's, so what compiles here against the test-companion jars is what those jars were compiled against, and the
@@ -184,8 +189,9 @@ Notes:
 - `_Repository_IT`'s `findAll()` check collects every row; on the large `SH` tables (`SALES`, `CUSTOMERS`, `COSTS`)
   that is slow. Narrow it (a page, or a count) once the ITs are run in earnest.
 - On the `hr` units Hibernate logs `HHH90005707: Unable to locate static metamodel field: ...JobHistory_.employeeId`
-  (and `startDate`): `JobHistory`'s `@IdClass` attributes are declared by `MappedJobHistory`, so their metamodel
-  fields are `MappedJobHistory_`'s. It is a warning only.
+  (and `startDate`), and on the `sh` units the same for `Cost_` and `Profit_`'s key attributes: an `@IdClass`
+  entity's `@Id` attributes are declared by its mapped superclass, so their metamodel fields are
+  `MappedJobHistory_`'s, `MappedCost_`'s and `MappedProfit_`'s. It is a warning only.
 
 - `META-INF/persistence.xml`, per module: units `<schema>-test` (H2 `jdbc:h2:mem:;database_to_upper=false;MODE=LEGACY`,
   `sa` / `password`, `create-drop`) and `<schema>-it` (Oracle, `none`), mirroring upstream's; keep them in step. Both

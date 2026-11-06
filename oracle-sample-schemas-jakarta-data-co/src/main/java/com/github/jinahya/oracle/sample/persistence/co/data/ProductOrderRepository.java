@@ -1,7 +1,7 @@
 package com.github.jinahya.oracle.sample.persistence.co.data;
 
 import com.github.jinahya.oracle.sample.persistence.co.ProductOrder;
-import com.github.jinahya.oracle.sample.persistence.co.ProductOrderId;
+import com.github.jinahya.oracle.sample.persistence.co.mapped.ProductOrderId;
 import jakarta.data.repository.CrudRepository;
 import jakarta.data.repository.Repository;
 

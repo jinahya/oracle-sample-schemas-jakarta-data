@@ -1,7 +1,7 @@
 package com.github.jinahya.oracle.sample.persistence.co.data;
 
 import com.github.jinahya.oracle.sample.persistence.co.ProductOrder;
-import com.github.jinahya.oracle.sample.persistence.co.ProductOrderId;
+import com.github.jinahya.oracle.sample.persistence.co.mapped.ProductOrderId;
 import org.jboss.weld.junit5.auto.AddBeanClasses;
 
 /**

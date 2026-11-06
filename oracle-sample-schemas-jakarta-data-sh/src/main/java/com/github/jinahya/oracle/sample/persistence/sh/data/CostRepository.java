@@ -1,7 +1,7 @@
 package com.github.jinahya.oracle.sample.persistence.sh.data;
 
 import com.github.jinahya.oracle.sample.persistence.sh.Cost;
-import com.github.jinahya.oracle.sample.persistence.sh.CostId;
+import com.github.jinahya.oracle.sample.persistence.sh.mapped.CostId;
 import jakarta.data.repository.CrudRepository;
 import jakarta.data.repository.Repository;
 

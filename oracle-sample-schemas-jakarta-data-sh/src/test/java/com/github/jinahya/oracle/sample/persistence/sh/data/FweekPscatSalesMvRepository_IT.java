@@ -1,7 +1,7 @@
 package com.github.jinahya.oracle.sample.persistence.sh.data;
 
 import com.github.jinahya.oracle.sample.persistence.sh.FweekPscatSalesMv;
-import com.github.jinahya.oracle.sample.persistence.sh.FweekPscatSalesMvId;
+import com.github.jinahya.oracle.sample.persistence.sh.mapped.FweekPscatSalesMvId;
 import org.jboss.weld.junit5.auto.AddBeanClasses;
 
 /**
